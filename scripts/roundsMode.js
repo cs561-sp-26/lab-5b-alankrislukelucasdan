@@ -247,25 +247,20 @@ function deleteRound(roundId) {
 /*************************************************************************
  * @function confirmDelete
  * @desc
- * Present pop-up modal dialog asking user to confirm delete operation
+ * Present pop-up modal dialog asking user to confirm delete operation.
+ * If user confirms, call deleteRound to delete the round.
  * @param roundId -- the unique id of the round to be deleted
- * @returns -- true if user confirms delete, false otherwise
  *************************************************************************/
 function confirmDelete(roundId) {
-  //TO DO: Present modal dialog prompting user to confirm delete
-  //Return true if user confirms delete, false otherwise
   let modal = new bootstrap.Modal(
       document.getElementById("confirmDeleteRoundModal")
   );
   let confirmBtn = document.getElementById("confirmDeleteBtn");
-  confirmBtn.addEventListener("click", function (event) {
-      event.preventDefault();
+  confirmBtn.onclick = () =>{ 
       console.log("deleting round with id " + roundId);
-      
       deleteRound(roundId);
-      
       modal.hide();
-  });
+  };
   modal.show();
 }
 
