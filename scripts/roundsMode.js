@@ -227,6 +227,41 @@ function deleteRound(roundId) {
     GlobalUserData.rounds = GlobalUserData.rounds.filter(function (round) {
         return round.roundNum !== roundId;
     });
+    for (var i = 0; i < GlobalRoundsTable.rows.length; i++) {
+        let row = GlobalRoundsTable.rows[i];
+        // Check if the id of the row matches the id you're looking for
+        if (row.id === "r-" + roundId) {
+            GlobalRoundsTable.deleteRow(i);
+            break;
+        }
+    }
+    localStorage.setItem(
+          GlobalUserData.accountInfo.email,
+          JSON.stringify(GlobalUserData)
+      );
+    GlobalRoundsTableCaption.textContent =
+        "Table displaying " +
+        (GlobalRoundsTable.rows.length - 1) +
+        " speedgolf rounds";
+}
+/*************************************************************************
+ * @function confirmDelete
+ * @desc
+ * Present pop-up modal dialog asking user to confirm delete operation.
+ * If user confirms, call deleteRound to delete the round.
+ * @param roundId -- the unique id of the round to be deleted
+ *************************************************************************/
+function confirmDelete(roundId) {
+  let modal = new bootstrap.Modal(
+      document.getElementById("confirmDeleteRoundModal")
+  );
+  let confirmBtn = document.getElementById("confirmDeleteBtn");
+  confirmBtn.onclick = () =>{ 
+      console.log("deleting round with id " + roundId);
+      deleteRound(roundId);
+      modal.hide();
+  };
+  modal.show();
 }
 
 /*************************************************************************
